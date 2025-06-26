@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popup Content</title>
+    <style>
+        #popupDialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay"></div>
+    <label for="popupBtn">${artist.name}</label>
+    <div id="popupDialog">
+        <h2>Welcome to the Popup!</h2>
+        <p>This is content loaded from popup.html.</p>
+        <button onclick="closeFn()">
+            Close
+        </button>
+    </div> 
+    
+    <script>
+        function closeFn() {
+            document.getElementById(
+                "overlay"
+                ).style.display = "none";
+            document.getElementById(
+                "popupDialog"
+                ).style.display = "none";
+        };
+    </script>
+</body>
+</html>

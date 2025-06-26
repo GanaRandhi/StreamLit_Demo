@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Art Gallery</title>
+    <script src="https://cdn.jsdelivr.net/npm/streamlit-component-lib@1.3.0/dist/streamlit-component-lib.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #f0f8ff;
+            --accent-color: #add8e6;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .header {
+            background-image: url('header_bg.png');
+            background-size: cover;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .artist-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .artist-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;  
+        }
+        
+        .popup{
+            position:absolute;
+            top:100px;
+            margin:100px auto;
+            width:600px;
+            height:450px;
+            font-family:verdana;
+            font-size:13px;
+            padding:10px;
+            background-color:rgb(240,240,240);
+            border:2px solid grey;
+            z-index:100000000000000000;
+            left:300px;
+        }
+    
+        .cancel{
+            display:relative;
+            margin:0;
+            float:right;
+            height:10px;
+            width:14px;
+            padding:0 0 5px 0;
+            background-color:red;
+            text-align:center;
+            font-weight:bold;
+            font-size:11px;
+            color:white;
+            border-radius:3px;
+            z-index:100000000000000000;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Famous Masterpieces</h1>
+        <p>Explore the works of history's greatest artists</p>
+    </div>
+    <div id="app"></div>
+
+    <script type="module">
+        // This will be replaced by Streamlit's Python backend
+        const artists = [
+            {
+                name: "Pablo Picasso",
+                alias: "C:/GenAI/Site_Using_Streamlit/picasso",
+                years: "1881-1973",
+                famous_work: "Mona Lisa",
+                description: "Spanish painter, sculptor, and stage designer"
+            },
+            {
+                name: "Michelangelo",
+                alias: "C:/GenAI/Site_Using_Streamlit/Michelangelo",
+                years: "1475-1564",
+                famous_work: "The Creation of Adam",
+                description: "Italian sculptor, painter, architect and poet"
+            },
+            {
+                name: "Vincent Van Gogh",
+                alias: "C:/GenAI/Site_Using_Streamlit/VanGogh",
+                years: "1853-1890",
+                famous_work: "The School of Athens",
+                description: "Dutch Post-Impressionist painter"
+            },
+            {
+                name: "Rembrandt",
+                alias: "C:/GenAI/Site_Using_Streamlit/rembrandt",
+                years: "1606-1669",
+                famous_work: "The Anatomy Lesson of Dr Nicolaes Tulp",
+                description: "Dutch painter and graphic artist"
+            }
+        ];
+
+        function renderArtists() {
+            const app = document.getElementById('app');
+            const artistGrid = document.createElement('div');
+            artistGrid.className = 'artist-grid';
+
+            artists.forEach(artist => {
+                const card = document.createElement('button');
+                card.style.border = 'aquamarine 1px solid';
+                card.className = 'artist-card';
+                card.innerHTML = `
+                    <h2>${artist.name}</h2>
+                    <p>${artist.years}</p>
+                    <p><strong>Famous Work:</strong> ${artist.famous_work}</p>
+                    <p>${artist.description}</p>
+                `;
+                card.addEventListener('click', function(){
+                    openCenteredPopup(artist)});
+                artistGrid.appendChild(card);
+            });
+
+            app.appendChild(artistGrid);
+        }
+        function openCenteredPopup(artist) {
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.id = 'test';
+
+            popup.innerHTML = `
+                    <h2>${artist.name}</h2>
+                    <img src="${artist.alias}/1.jpg" >
+                    <img src="${artist.alias}/2.jpg" >
+                    <img src="${artist.alias}/3.jpg" >
+                `;
+        
+            const cancel = document.createElement('div');
+            cancel.className = 'cancel';
+            cancel.onclick= function () { 
+                popup.destroy(); }
+            popup.appendChild(cancel);
+        
+            document.body.appendChild(popup);
+        }            
+
+        renderArtists();
+    </script>
+</body>
+</html>
+
